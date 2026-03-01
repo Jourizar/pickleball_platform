@@ -13,10 +13,21 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         brand: {
-          green: "#16a34a",   // green-600
-          dark: "#14532d",    // green-900
-          light: "#dcfce7",   // green-100
+          black:  "#050e07",
+          dark:   "#0d1a0f",
+          green:  "#22c55e",
+          vivid:  "#4ade80",
+          light:  "#dcfce7",
         },
+        accent: {
+          yellow: "#facc15",
+          gold:   "#f59e0b",
+          orange: "#fb923c",
+        },
+      },
+      fontFamily: {
+        display: ["var(--font-display)", "sans-serif"],
+        body:    ["var(--font-body)", "sans-serif"],
       },
     },
   },

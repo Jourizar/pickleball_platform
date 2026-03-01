@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Nosotros",
+    "guide": "Guía",
+    "reservations": "Reservaciones",
+    "account": "Mi Cuenta",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "admin": "Administración"
+  },
+  "home": {
+    "hero_title": "Bienvenido al Nell Pickleball Club",
+    "hero_subtitle": "El primer club de pickleball de República Dominicana.",
+    "cta_join": "Únete Ahora",
+    "cta_learn": "Aprende Más",
+    "membership_title": "Planes de Membresía",
+    "membership_subtitle": "Elige el plan perfecto para ti",
+    "mission_title": "Nuestra Misión",
+    "vision_title": "Nuestra Visión",
+    "whatsapp_cta": "¿Tienes preguntas? Contáctanos en WhatsApp"
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "story_title": "Nuestra Historia",
+    "team_title": "Nuestro Equipo"
+  },
+  "guide": {
+    "title": "Guía de Pickleball",
+    "subtitle": "Todo lo que necesitas saber para empezar",
+    "faq_title": "Preguntas Frecuentes",
+    "whatsapp_cta": "¿Aún tienes dudas? Escríbenos"
+  },
+  "reservations": {
+    "title": "Reservaciones",
+    "my_reservations": "Mis Reservaciones",
+    "available_courts": "Canchas Disponibles",
+    "select_date": "Selecciona una fecha",
+    "reserve": "Reservar",
+    "cancel": "Cancelar",
+    "confirmed": "Confirmada",
+    "canceled": "Cancelada",
+    "tournaments_title": "Torneos",
+    "register": "Inscribirse",
+    "registered": "Inscrito"
+  },
+  "auth": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "full_name": "Nombre completo",
+    "phone": "Teléfono",
+    "login_title": "Iniciar Sesión",
+    "signup_title": "Crear Cuenta",
+    "no_account": "¿No tienes cuenta?",
+    "have_account": "¿Ya tienes cuenta?",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "loading": "Cargando..."
+  },
+  "account": {
+    "title": "Mi Cuenta",
+    "subscription": "Membresía",
+    "status_active": "Activa",
+    "status_inactive": "Inactiva",
+    "manage_subscription": "Gestionar Suscripción",
+    "edit_profile": "Editar Perfil",
+    "save": "Guardar"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "content": "Contenido",
+    "faqs": "Preguntas Frecuentes",
+    "plans": "Planes",
+    "courts": "Canchas",
+    "tournaments": "Torneos",
+    "settings": "Configuración",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "add": "Agregar",
+    "edit": "Editar",
+    "preview": "Vista Previa"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "Guardado correctamente",
+    "confirm_delete": "¿Estás seguro de que deseas eliminar esto?",
+    "per_month": "/mes",
+    "currency": "RD$"
+  },
+  "helpbot": {
+    "title": "Asistente",
+    "placeholder": "Escribe tu pregunta...",
+    "send": "Enviar",
+    "whatsapp_fallback": "Para más ayuda, contáctanos por WhatsApp"
+  }
+}

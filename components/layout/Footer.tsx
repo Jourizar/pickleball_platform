@@ -1,4 +1,3 @@
-// components/layout/Footer.tsx
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
@@ -10,19 +9,40 @@ export default function Footer({ locale }: FooterProps) {
   const t = useTranslations('nav')
 
   return (
-    <footer className="bg-green-950 text-green-100 py-10 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="bg-[#050e07] border-t border-white/5 py-12">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+
+        {/* Brand */}
         <div>
-          <p className="font-bold text-lg text-white">Nell Pickleball Club</p>
-          <p className="text-sm text-green-300 mt-1">República Dominicana</p>
+          <p className="font-display font-bold text-2xl tracking-tight">
+            <span className="text-white">NELL </span>
+            <span className="text-yellow-400">PBC</span>
+          </p>
+          <p className="font-body text-xs text-white/30 mt-1 tracking-widest uppercase">
+            República Dominicana
+          </p>
         </div>
-        <nav className="flex gap-6 text-sm flex-wrap justify-center">
-          <Link href={`/${locale}`} className="hover:text-white transition-colors">{t('home')}</Link>
-          <Link href={`/${locale}/about`} className="hover:text-white transition-colors">{t('about')}</Link>
-          <Link href={`/${locale}/guide`} className="hover:text-white transition-colors">{t('guide')}</Link>
-          <Link href={`/${locale}/reservations`} className="hover:text-white transition-colors">{t('reservations')}</Link>
+
+        {/* Nav */}
+        <nav className="flex gap-8 font-body text-sm flex-wrap justify-center">
+          {[
+            { href: `/${locale}`,              label: t('home') },
+            { href: `/${locale}/about`,        label: t('about') },
+            { href: `/${locale}/guide`,        label: t('guide') },
+            { href: `/${locale}/reservations`, label: t('reservations') },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-white/40 hover:text-white transition-colors duration-150"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
-        <p className="text-xs text-green-400">
+
+        {/* Copyright */}
+        <p className="font-body text-xs text-white/20 tracking-wide">
           © {new Date().getFullYear()} Nell Pickleball Club
         </p>
       </div>
