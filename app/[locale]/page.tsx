@@ -133,7 +133,7 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
       {/* ══════════════════════════════════════
           HERO
       ══════════════════════════════════════ */}
-      <section className="relative min-h-[calc(100vh-4rem)] bg-brand-black flex items-center overflow-hidden">
+      <section className="relative min-h-[calc(100vh-4rem)] bg-brand-black flex items-start overflow-hidden">
 
         {/* Looping background video */}
         <video
@@ -148,67 +148,51 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
         {/* Overlay: starts fully opaque, slowly reveals the video underneath */}
         <div className="video-overlay absolute inset-0 bg-brand-black" />
 
-        {/* Court-line grid pattern on top of video */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(34,197,94,1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-
-        {/* Left-side vignette for text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-black/90 via-brand-black/50 to-transparent pointer-events-none" />
-
-        {/* Bottom-left radial glow */}
-        <div className="absolute -bottom-32 -left-32 w-[600px] h-[600px] rounded-full bg-brand-green opacity-10 blur-[120px] pointer-events-none" />
-
-        <div className="relative max-w-6xl mx-auto px-8 md:px-16 py-24 w-full">
+        <div className="relative max-w-6xl mx-auto px-8 md:px-16 pt-20 md:pt-24 pb-24 w-full">
 
           {/* Text — anchored left */}
           <div className="z-10 max-w-xl">
-            <div className="hero-badge inline-flex items-center gap-2 bg-brand-green/10 border border-brand-green/30 text-brand-green px-4 py-1.5 rounded-full text-sm font-body font-medium mb-6 tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
+            <div className="hero-badge inline-flex items-center gap-2 bg-brand-green/20 border border-brand-green/40 text-green-800 px-4 py-1.5 rounded-full text-sm font-body font-medium mb-6 tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-green-700 animate-pulse" />
               República Dominicana
             </div>
 
-            <h1 className="hero-title font-display text-6xl md:text-7xl lg:text-8xl font-extrabold leading-none tracking-tight text-white mb-4">
+            <h1 className="hero-title font-display text-6xl md:text-7xl lg:text-8xl font-extrabold leading-none tracking-tight text-[#050e07] mb-4">
               NELL<br />
-              <span className="text-accent-yellow">PICKLEBALL</span><br />
+              <span className="text-green-700">PICKLEBALL</span><br />
               CLUB
             </h1>
 
-            <p className="hero-sub font-body text-lg text-white/85 mb-8 max-w-md leading-relaxed">
+            <p className="hero-sub font-body text-lg text-[#050e07]/75 mb-8 max-w-md leading-relaxed">
               {t('hero_subtitle')}
             </p>
 
             <div className="hero-cta flex flex-col sm:flex-row gap-4">
               <Link
                 href={`/${locale}/signup`}
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-yellow text-brand-black font-display font-bold text-lg rounded-full hover:bg-accent-gold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-700 text-white font-display font-bold text-lg rounded-full hover:bg-green-800 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 {t('cta_join')}
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/40 text-white font-display font-bold text-lg rounded-full hover:border-white/70 hover:bg-white/10 transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#050e07]/30 text-[#050e07] font-display font-bold text-lg rounded-full hover:border-[#050e07]/60 hover:bg-[#050e07]/5 transition-all duration-200"
               >
                 {t('cta_learn')}
               </Link>
             </div>
 
             {/* Stats strip */}
-            <div className="hero-cta mt-12 flex gap-8 border-t border-white/20 pt-8">
+            <div className="hero-cta mt-12 flex gap-8 border-t border-[#050e07]/15 pt-8">
               {[
                 { value: '#1', label: 'Club en la RD' },
                 { value: '3', label: 'Canchas' },
                 { value: '12+', label: 'Torneos' },
               ].map(({ value, label }) => (
                 <div key={label}>
-                  <p className="font-display text-3xl font-bold text-accent-yellow">{value}</p>
-                  <p className="font-body text-xs text-green-200/70 uppercase tracking-widest mt-0.5">{label}</p>
+                  <p className="font-display text-3xl font-bold text-green-700">{value}</p>
+                  <p className="font-body text-xs text-[#050e07]/55 uppercase tracking-widest mt-0.5">{label}</p>
                 </div>
               ))}
             </div>
@@ -217,9 +201,9 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <span className="font-body text-xs text-white tracking-[0.2em] uppercase">Scroll</span>
-          <div className="w-px h-10 bg-gradient-to-b from-white to-transparent" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+          <span className="font-body text-xs text-[#050e07] tracking-[0.2em] uppercase">Scroll</span>
+          <div className="w-px h-10 bg-gradient-to-b from-[#050e07] to-transparent" />
         </div>
       </section>
 
