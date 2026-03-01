@@ -145,8 +145,8 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
           src="/videos/pickleball_video1.mp4"
         />
 
-        {/* Dark overlay so text stays readable */}
-        <div className="absolute inset-0 bg-brand-black/65" />
+        {/* Overlay: starts fully opaque, slowly reveals the video underneath */}
+        <div className="video-overlay absolute inset-0 bg-brand-black" />
 
         {/* Court-line grid pattern on top of video */}
         <div
@@ -163,9 +163,9 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
         {/* Top-right glow */}
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-accent-yellow opacity-[0.07] blur-[100px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center w-full">
+        <div className="relative max-w-3xl mx-auto px-6 py-24 w-full">
 
-          {/* Left — text */}
+          {/* Text */}
           <div className="z-10">
             <div className="hero-badge inline-flex items-center gap-2 bg-brand-green/10 border border-brand-green/30 text-brand-green px-4 py-1.5 rounded-full text-sm font-body font-medium mb-6 tracking-wide">
               <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
@@ -213,23 +213,6 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
             </div>
           </div>
 
-          {/* Right — floating pickleball visuals */}
-          <div className="hidden md:flex items-center justify-center relative h-[480px]">
-            {/* Main ball */}
-            <div className="hero-ball absolute">
-              <PickleballSVG size={300} />
-            </div>
-            {/* Secondary ball */}
-            <div className="hero-ball-sm absolute top-4 right-8">
-              <PickleballSVG size={90} className="opacity-60" />
-            </div>
-            {/* Tertiary ball */}
-            <div className="hero-ball-xs absolute bottom-12 left-4">
-              <PickleballSVG size={50} className="opacity-40" />
-            </div>
-            {/* Paddle silhouette hint */}
-            <div className="absolute bottom-0 right-0 w-48 h-48 rounded-tl-[80px] border-2 border-brand-green/20 opacity-30" />
-          </div>
         </div>
 
         {/* Scroll indicator */}
