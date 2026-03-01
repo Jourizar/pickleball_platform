@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl'
 import AnimateInView from '@/components/ui/AnimateInView'
+import { ExternalLink, Play } from 'lucide-react'
 
 export default function GuidePage() {
   const t = useTranslations('guide')
@@ -7,23 +8,101 @@ export default function GuidePage() {
   const faqs = [
     {
       q: '¿Qué es el pickleball?',
-      a: 'El pickleball es un deporte de raqueta que combina elementos del tenis, el bádminton y el ping-pong. Se juega en una cancha más pequeña y es ideal para todas las edades.',
+      a: 'El pickleball es un deporte de raqueta que combina elementos del tenis, el bádminton y el ping-pong. Se juega en una cancha más pequeña (13.4 × 6.1 m) con una red similar a la del bádminton y es ideal para todas las edades y niveles de condición física.',
     },
     {
-      q: '¿Qué equipo necesito?',
-      a: 'Necesitas una paleta de pickleball (más corta y sólida que una raqueta de tenis), una pelota perforada y calzado deportivo con buena tracción lateral.',
+      q: '¿Qué equipo necesito para empezar?',
+      a: 'Necesitas tres cosas: una paleta de pickleball (más corta y sólida que una raqueta de tenis), una pelota perforada similar a una pelota wiffle, y calzado deportivo con buena tracción lateral. En Nell PBC prestamos equipo a todos los miembros.',
+    },
+    {
+      q: '¿Cuáles son las reglas básicas del juego?',
+      a: 'El juego comienza con un saque diagonal desde detrás de la línea de servicio. El equipo que saca es el único que puede anotar puntos. Los partidos se juegan a 11 puntos (ganar por 2). La regla más importante es la "zona de no-voleo" (la cocina): no puedes golpear la pelota en el aire si estás parado dentro de esa zona.',
+    },
+    {
+      q: '¿Qué es la zona de no-voleo o "la cocina"?',
+      a: 'La cocina es la zona de 2.1 metros a cada lado de la red. Puedes entrar a ella, pero no puedes golpear la pelota en el aire (volear) mientras estés dentro. Esta regla previene que los jugadores dominen la red y hace el juego más estratégico y accesible para todos.',
+    },
+    {
+      q: '¿Cuántos jugadores se necesitan para jugar?',
+      a: 'Lo más común es jugar en dobles (2 vs 2), aunque también se puede jugar en singles (1 vs 1). Los dobles son el formato más popular porque hace el juego más social y es más fácil para principiantes cubrir la cancha.',
+    },
+    {
+      q: '¿Cuánto dura un partido típico?',
+      a: 'Un juego de dobles a 11 puntos dura entre 15 y 25 minutos. Los torneos suelen jugar al mejor de 3 o al mejor de 5 juegos. La duración corta es una de las razones por las que el pickleball es tan popular — se pueden jugar varios partidos en una sola sesión.',
     },
     {
       q: '¿Cómo reservo una cancha?',
-      a: 'Puedes reservar una cancha desde la sección de Reservaciones una vez que tengas una membresía activa. Las reservaciones se pueden hacer hasta 7 días de anticipación.',
+      a: 'Puedes reservar una cancha desde la sección de Reservaciones una vez que tengas una membresía activa. Las reservaciones se pueden hacer hasta 7 días de anticipación. Los miembros Familiar tienen acceso prioritario.',
     },
     {
       q: '¿Hay clases para principiantes?',
-      a: 'Sí, ofrecemos clases grupales para todos los niveles incluidas en tu membresía. También hay clínicas especiales los fines de semana.',
+      a: 'Sí, ofrecemos clases grupales para todos los niveles incluidas en tu membresía. También hay clínicas especiales los fines de semana. Si nunca has jugado, recomendamos empezar con nuestra clase "Pickleball 101" que cubre las reglas básicas, técnica de servicio y posicionamiento en cancha.',
     },
     {
-      q: '¿Puedo traer invitados?',
-      a: 'Los miembros pueden traer invitados por una tarifa diaria. Los planes Familiar permiten acceso ilimitado para todos los miembros registrados.',
+      q: '¿Puedo traer invitados al club?',
+      a: 'Sí. El plan Individual incluye 1 invitado por mes y el plan Familiar incluye 2. Los invitados adicionales pagan una tarifa de acceso diario. Los invitados deben estar acompañados por el miembro en todo momento.',
+    },
+    {
+      q: '¿Cómo se calcula el nivel o ranking de un jugador?',
+      a: 'El sistema de clasificación más usado globalmente es el DUPR (Dynamic Universal Pickleball Rating), que va del 2.0 (principiante absoluto) al 8.0 (profesional). Nell PBC usa DUPR para organizar torneos internos por niveles. Puedes registrarte gratis en mydupr.com.',
+    },
+  ]
+
+  const videos = [
+    {
+      title: 'Pickleball 101 — Reglas completas',
+      channel: 'USA Pickleball (Oficial)',
+      description: 'El canal oficial de la Asociación de Pickleball de los EE.UU. con tutoriales para todos los niveles, desde reglas básicas hasta técnicas avanzadas.',
+      href: 'https://www.youtube.com/@USAPickleball',
+      tag: 'Canal Oficial',
+    },
+    {
+      title: 'Técnica y estrategia para principiantes',
+      channel: 'PrimeTime Pickleball',
+      description: 'Uno de los canales instructivos más completos de YouTube. Cubre dinks, tercera bola, voleos y estrategia de dobles con demostraciones claras.',
+      href: 'https://www.youtube.com/@primetimepickleball',
+      tag: 'Instructivo',
+    },
+    {
+      title: 'Domina el juego en la cocina',
+      channel: 'Pickleball Kitchen',
+      description: 'Especializado en la zona de no-voleo: dinks, resets, drops y cómo controlar el punto desde la red. Ideal para jugadores que quieren subir de nivel.',
+      href: 'https://www.youtube.com/@PickleballKitchen',
+      tag: 'Avanzado',
+    },
+    {
+      title: 'Torneos y competencia profesional',
+      channel: 'Major League Pickleball',
+      description: 'Sigue la liga profesional más importante del mundo. Ver a los mejores jugadores del planeta en acción acelera enormemente el aprendizaje.',
+      href: 'https://www.youtube.com/@MajorLeaguePickleball',
+      tag: 'Pro',
+    },
+  ]
+
+  const resources = [
+    {
+      name: 'USA Pickleball',
+      url: 'https://usapickleball.org',
+      description: 'Organismo oficial que rige el deporte en EE.UU. Reglamento oficial, torneos y certificación de árbitros.',
+      tag: 'Reglamento',
+    },
+    {
+      name: 'DUPR — Rating Global',
+      url: 'https://mydupr.com',
+      description: 'El sistema de clasificación de jugadores más usado mundialmente. Crea tu perfil gratis y registra tus partidas para obtener tu rating DUPR.',
+      tag: 'Clasificación',
+    },
+    {
+      name: 'APP Tour',
+      url: 'https://www.apptour.org',
+      description: 'Association of Pickleball Players — Tour profesional de América con calendarios de torneos, rankings y transmisiones en vivo.',
+      tag: 'Tour Pro',
+    },
+    {
+      name: 'Pickleball Central',
+      url: 'https://www.pickleballcentral.com',
+      description: 'El retailer especializado más grande del mundo. Guías de compra de paletas, pelotas y equipamiento para todos los presupuestos.',
+      tag: 'Equipamiento',
     },
   ]
 
@@ -44,7 +123,7 @@ export default function GuidePage() {
         </AnimateInView>
 
         {/* FAQ */}
-        <AnimateInView className="mb-16">
+        <AnimateInView className="mb-20">
           <h2 className="font-display text-3xl font-bold text-white mb-8">{t('faq_title')}</h2>
           <div className="space-y-3">
             {faqs.map((faq) => (
@@ -62,6 +141,83 @@ export default function GuidePage() {
                   <p className="font-body text-green-100/60 leading-relaxed pt-4">{faq.a}</p>
                 </div>
               </details>
+            ))}
+          </div>
+        </AnimateInView>
+
+        {/* Video resources */}
+        <AnimateInView className="mb-20">
+          <div className="flex items-center gap-3 mb-2">
+            <Play size={18} className="text-yellow-400" aria-hidden="true" />
+            <p className="font-body text-green-400 text-sm font-medium tracking-[0.2em] uppercase">
+              Videos
+            </p>
+          </div>
+          <h2 className="font-display text-3xl font-bold text-white mb-2">Aprende con los mejores</h2>
+          <p className="font-body text-white/40 text-sm mb-8">Canales de YouTube recomendados por instructores del club</p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {videos.map((v) => (
+              <a
+                key={v.title}
+                href={v.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-green-400/30 hover:bg-white/[0.08] transition-all duration-200"
+              >
+                {/* Tag + icon row */}
+                <div className="flex items-start justify-between mb-3">
+                  <span className="inline-block font-body text-xs font-medium text-green-400 bg-green-400/10 border border-green-400/20 px-2.5 py-1 rounded-full">
+                    {v.tag}
+                  </span>
+                  <ExternalLink size={14} className="text-white/20 group-hover:text-green-400 transition-colors mt-1" aria-hidden="true" />
+                </div>
+
+                {/* Play icon + title */}
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-7 h-7 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
+                    <Play size={10} className="text-white fill-white ml-0.5" aria-hidden="true" />
+                  </div>
+                  <p className="font-display font-bold text-white text-base leading-tight">{v.title}</p>
+                </div>
+
+                <p className="font-body text-xs text-white/30 mb-2 ml-9">{v.channel}</p>
+                <p className="font-body text-sm text-white/50 leading-relaxed">{v.description}</p>
+              </a>
+            ))}
+          </div>
+        </AnimateInView>
+
+        {/* External resources */}
+        <AnimateInView className="mb-20">
+          <div className="flex items-center gap-3 mb-2">
+            <ExternalLink size={18} className="text-yellow-400" aria-hidden="true" />
+            <p className="font-body text-green-400 text-sm font-medium tracking-[0.2em] uppercase">
+              Recursos
+            </p>
+          </div>
+          <h2 className="font-display text-3xl font-bold text-white mb-2">Sitios de referencia</h2>
+          <p className="font-body text-white/40 text-sm mb-8">Fuentes oficiales y comunidades reconocidas globalmente</p>
+          <div className="space-y-3">
+            {resources.map((r) => (
+              <a
+                key={r.name}
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 hover:border-green-400/30 hover:bg-white/[0.08] transition-all duration-200"
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-0.5">
+                    <p className="font-display font-bold text-white text-base">{r.name}</p>
+                    <span className="font-body text-xs text-yellow-400/80 bg-yellow-400/10 border border-yellow-400/20 px-2 py-0.5 rounded-full flex-shrink-0">
+                      {r.tag}
+                    </span>
+                  </div>
+                  <p className="font-body text-sm text-white/40 leading-relaxed">{r.description}</p>
+                  <p className="font-body text-xs text-green-400/50 mt-1 truncate">{r.url}</p>
+                </div>
+                <ExternalLink size={16} className="text-white/20 group-hover:text-green-400 transition-colors flex-shrink-0" aria-hidden="true" />
+              </a>
             ))}
           </div>
         </AnimateInView>

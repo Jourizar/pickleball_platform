@@ -135,9 +135,22 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
       ══════════════════════════════════════ */}
       <section className="relative min-h-[calc(100vh-4rem)] bg-brand-black flex items-center overflow-hidden">
 
-        {/* Court-line grid pattern */}
+        {/* Looping background video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/videos/pickleball_video1.mp4"
+        />
+
+        {/* Dark overlay so text stays readable */}
+        <div className="absolute inset-0 bg-brand-black/65" />
+
+        {/* Court-line grid pattern on top of video */}
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage:
               'linear-gradient(rgba(34,197,94,1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,1) 1px, transparent 1px)',
