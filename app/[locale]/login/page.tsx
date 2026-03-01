@@ -1,5 +1,10 @@
+'use client'
+
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 interface LoginPageProps {
   params: { locale: string }
@@ -7,6 +12,29 @@ interface LoginPageProps {
 
 export default function LoginPage({ params: { locale } }: LoginPageProps) {
   const t = useTranslations('auth')
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+      return
+    }
+
+    router.push(`/${locale}`)
+    router.refresh()
+  }
 
   return (
     <div className="inner-page flex items-center justify-center px-6 py-16">
@@ -22,7 +50,7 @@ export default function LoginPage({ params: { locale } }: LoginPageProps) {
           <p className="font-body text-sm text-white/40 mt-2">Bienvenido de vuelta</p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block font-body text-sm font-medium text-white/70 mb-1.5">
               {t('email')}
@@ -31,6 +59,9 @@ export default function LoginPage({ params: { locale } }: LoginPageProps) {
               type="email"
               className="input-dark"
               placeholder="tu@email.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
             />
           </div>
           <div>
@@ -41,6 +72,9 @@ export default function LoginPage({ params: { locale } }: LoginPageProps) {
               type="password"
               className="input-dark"
               placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
             />
           </div>
           <div className="flex justify-end">
@@ -48,11 +82,17 @@ export default function LoginPage({ params: { locale } }: LoginPageProps) {
               {t('forgot_password')}
             </a>
           </div>
+
+          {error && (
+            <p className="text-red-400 text-sm font-body">{error}</p>
+          )}
+
           <button
             type="submit"
-            className="w-full py-4 rounded-full font-display font-bold text-lg text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors hover:shadow-lg hover:shadow-yellow-400/20"
+            disabled={loading}
+            className="w-full py-4 rounded-full font-display font-bold text-lg text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors hover:shadow-lg hover:shadow-yellow-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t('login_title')} →
+            {loading ? 'Iniciando sesión...' : `${t('login_title')} →`}
           </button>
         </form>
 

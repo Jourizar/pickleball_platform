@@ -1,5 +1,10 @@
+'use client'
+
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 interface SignupPageProps {
   params: { locale: string }
@@ -7,6 +12,37 @@ interface SignupPageProps {
 
 export default function SignupPage({ params: { locale } }: SignupPageProps) {
   const t = useTranslations('auth')
+  const router = useRouter()
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    const supabase = createClient()
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName, phone },
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+      return
+    }
+
+    router.push(`/${locale}`)
+    router.refresh()
+  }
 
   return (
     <div className="inner-page flex items-center justify-center px-6 py-16">
@@ -22,36 +58,70 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
           <p className="font-body text-sm text-white/40 mt-2">Únete al club</p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block font-body text-sm font-medium text-white/70 mb-1.5">
               {t('full_name')}
             </label>
-            <input type="text" className="input-dark" placeholder="Tu nombre completo" />
+            <input
+              type="text"
+              className="input-dark"
+              placeholder="Tu nombre completo"
+              value={fullName}
+              onChange={e => setFullName(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label className="block font-body text-sm font-medium text-white/70 mb-1.5">
               {t('email')}
             </label>
-            <input type="email" className="input-dark" placeholder="tu@email.com" />
+            <input
+              type="email"
+              className="input-dark"
+              placeholder="tu@email.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label className="block font-body text-sm font-medium text-white/70 mb-1.5">
               {t('phone')}
             </label>
-            <input type="tel" className="input-dark" placeholder="+1 809 000 0000" />
+            <input
+              type="tel"
+              className="input-dark"
+              placeholder="+1 809 000 0000"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+            />
           </div>
           <div>
             <label className="block font-body text-sm font-medium text-white/70 mb-1.5">
               {t('password')}
             </label>
-            <input type="password" className="input-dark" placeholder="••••••••" />
+            <input
+              type="password"
+              className="input-dark"
+              placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
           </div>
+
+          {error && (
+            <p className="text-red-400 text-sm font-body">{error}</p>
+          )}
+
           <button
             type="submit"
-            className="w-full py-4 rounded-full font-display font-bold text-lg text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors hover:shadow-lg hover:shadow-yellow-400/20 mt-2"
+            disabled={loading}
+            className="w-full py-4 rounded-full font-display font-bold text-lg text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors hover:shadow-lg hover:shadow-yellow-400/20 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t('signup_title')} →
+            {loading ? 'Registrando...' : `${t('signup_title')} →`}
           </button>
         </form>
 
