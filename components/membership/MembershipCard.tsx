@@ -9,6 +9,17 @@ export interface MembershipPlan {
   badge_color: string
   cta_label: string
   locale: string
+  // Extended detail fields — not rendered by this card; passed through to MembershipModal
+  description?: string
+  court_hours?: string
+  classes_per_week?: string
+  guests?: string
+  tournaments?: string
+  not_included?: string[]
+}
+
+interface MembershipCardProps extends MembershipPlan {
+  onDetails?: () => void
 }
 
 export default function MembershipCard({
@@ -19,7 +30,8 @@ export default function MembershipCard({
   badge_color,
   cta_label,
   locale,
-}: MembershipPlan) {
+  onDetails,
+}: MembershipCardProps) {
   return (
     <div className="card-glow flex-shrink-0 w-72 md:w-auto bg-[#0d1a0f] border border-white/10 rounded-3xl overflow-hidden flex flex-col">
 
@@ -48,8 +60,8 @@ export default function MembershipCard({
         ))}
       </ul>
 
-      {/* CTA */}
-      <div className="px-6 pb-6">
+      {/* CTAs */}
+      <div className="px-6 pb-6 flex flex-col gap-3">
         <Link
           href={`/${locale}/signup`}
           className="group block w-full text-center py-3.5 rounded-full font-display font-bold text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-all duration-200 hover:shadow-lg hover:shadow-yellow-400/20"
@@ -57,6 +69,16 @@ export default function MembershipCard({
           {cta_label}
           <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform">→</span>
         </Link>
+        {onDetails && (
+          <button
+            type="button"
+            onClick={onDetails}
+            aria-label={`Ver detalles de ${name}`}
+            className="w-full py-3 rounded-full font-display font-bold text-sm text-white/60 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all duration-200"
+          >
+            Ver detalles
+          </button>
+        )}
       </div>
     </div>
   )

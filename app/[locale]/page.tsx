@@ -1,7 +1,8 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import AnimateInView from '@/components/ui/AnimateInView'
-import MembershipCard, { type MembershipPlan } from '@/components/membership/MembershipCard'
+import MembershipSection from '@/components/membership/MembershipSection'
+import type { MembershipPlan } from '@/components/membership/MembershipCard'
 
 const PLANS: Omit<MembershipPlan, 'locale'>[] = [
   {
@@ -9,10 +10,20 @@ const PLANS: Omit<MembershipPlan, 'locale'>[] = [
     name: 'Mini',
     age_range: 'Menores de 14 años',
     price: 1500,
+    description: 'El plan ideal para jóvenes que quieren descubrir el pickleball. Diseñado para desarrollar habilidades fundamentales en un ambiente divertido y seguro.',
     benefits: [
       'Acceso ilimitado a canchas',
       'Clases grupales incluidas',
       'Préstamo de equipo',
+    ],
+    court_hours: 'Lunes a Sábado, 8am – 5pm',
+    classes_per_week: '2 clases grupales por semana',
+    guests: 'No incluye invitados',
+    tournaments: 'Pago de entrada requerido',
+    not_included: [
+      'Acceso los domingos',
+      'Torneos gratuitos',
+      'Invitados',
     ],
     badge_color: 'bg-accent-yellow',
     cta_label: 'Suscribirse',
@@ -22,11 +33,20 @@ const PLANS: Omit<MembershipPlan, 'locale'>[] = [
     name: 'Individual',
     age_range: '14 años en adelante',
     price: 3000,
+    description: 'El paquete completo para el jugador comprometido. Acceso ilimitado, clases frecuentes y entrada gratuita a todos nuestros torneos oficiales.',
     benefits: [
       'Acceso ilimitado a canchas',
       'Clases grupales incluidas',
       'Préstamo de equipo',
-      'Acceso a torneos',
+      'Torneos incluidos',
+    ],
+    court_hours: 'Lunes a Domingo, 7am – 9pm',
+    classes_per_week: '4 clases grupales por semana',
+    guests: '1 invitado por mes',
+    tournaments: 'Entrada gratuita a todos los torneos',
+    not_included: [
+      'Reservaciones prioritarias',
+      'Más de 1 invitado por mes',
     ],
     badge_color: 'bg-brand-green',
     cta_label: 'Suscribirse',
@@ -36,12 +56,18 @@ const PLANS: Omit<MembershipPlan, 'locale'>[] = [
     name: 'Familiar',
     age_range: 'Hasta 4 miembros',
     price: 7500,
+    description: 'Todo lo que la familia necesita para disfrutar del pickleball juntos. Reservaciones prioritarias, descuentos exclusivos y el mayor horario de acceso disponible.',
     benefits: [
       'Todo lo del plan Individual',
       'Hasta 4 miembros de familia',
       'Reservaciones prioritarias',
       'Descuento en torneos',
     ],
+    court_hours: 'Lunes a Domingo, 6am – 10pm (acceso prioritario)',
+    classes_per_week: 'Clases ilimitadas para todos los miembros',
+    guests: '2 invitados por mes',
+    tournaments: 'Entrada gratuita + 20% descuento en torneos externos',
+    not_included: [],
     badge_color: 'bg-brand-vivid',
     cta_label: 'Suscribirse',
   },
@@ -220,18 +246,8 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
             </p>
           </AnimateInView>
 
-          {/* Cards */}
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible">
-            {PLANS.map((plan, i) => (
-              <AnimateInView
-                key={plan.id}
-                delay={i * 120}
-                className="snap-start flex-shrink-0 w-72 md:w-auto"
-              >
-                <MembershipCard {...plan} locale={locale} />
-              </AnimateInView>
-            ))}
-          </div>
+          {/* Cards — no AnimateInView wrapper: transform creates a stacking context that breaks the modal's position:fixed */}
+          <MembershipSection plans={PLANS} locale={locale} />
         </div>
       </section>
 
