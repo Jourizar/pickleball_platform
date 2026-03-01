@@ -158,15 +158,16 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
           }}
         />
 
+        {/* Left-side vignette for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-black/90 via-brand-black/50 to-transparent pointer-events-none" />
+
         {/* Bottom-left radial glow */}
         <div className="absolute -bottom-32 -left-32 w-[600px] h-[600px] rounded-full bg-brand-green opacity-10 blur-[120px] pointer-events-none" />
-        {/* Top-right glow */}
-        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-accent-yellow opacity-[0.07] blur-[100px] pointer-events-none" />
 
-        <div className="relative max-w-3xl mx-auto px-6 py-24 w-full">
+        <div className="relative max-w-6xl mx-auto px-8 md:px-16 py-24 w-full">
 
-          {/* Text */}
-          <div className="z-10">
+          {/* Text — anchored left */}
+          <div className="z-10 max-w-xl">
             <div className="hero-badge inline-flex items-center gap-2 bg-brand-green/10 border border-brand-green/30 text-brand-green px-4 py-1.5 rounded-full text-sm font-body font-medium mb-6 tracking-wide">
               <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
               República Dominicana
@@ -178,7 +179,7 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
               CLUB
             </h1>
 
-            <p className="hero-sub font-body text-lg text-green-200/70 mb-8 max-w-md leading-relaxed">
+            <p className="hero-sub font-body text-lg text-white/85 mb-8 max-w-md leading-relaxed">
               {t('hero_subtitle')}
             </p>
 
@@ -192,14 +193,14 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 text-white font-display font-bold text-lg rounded-full hover:border-white/50 hover:bg-white/5 transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/40 text-white font-display font-bold text-lg rounded-full hover:border-white/70 hover:bg-white/10 transition-all duration-200"
               >
                 {t('cta_learn')}
               </Link>
             </div>
 
             {/* Stats strip */}
-            <div className="hero-cta mt-12 flex gap-8 border-t border-white/10 pt-8">
+            <div className="hero-cta mt-12 flex gap-8 border-t border-white/20 pt-8">
               {[
                 { value: '#1', label: 'Club en la RD' },
                 { value: '3', label: 'Canchas' },
@@ -207,7 +208,7 @@ export default function HomePage({ params: { locale } }: HomePageProps) {
               ].map(({ value, label }) => (
                 <div key={label}>
                   <p className="font-display text-3xl font-bold text-accent-yellow">{value}</p>
-                  <p className="font-body text-xs text-green-300/60 uppercase tracking-widest mt-0.5">{label}</p>
+                  <p className="font-body text-xs text-green-200/70 uppercase tracking-widest mt-0.5">{label}</p>
                 </div>
               ))}
             </div>
