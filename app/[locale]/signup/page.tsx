@@ -26,7 +26,7 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -34,8 +34,16 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
       },
     })
 
-    if (error) {
-      setError(error.message)
+    if (signUpError) {
+      setError(signUpError.message)
+      setLoading(false)
+      return
+    }
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+
+    if (signInError) {
+      setError(signInError.message)
       setLoading(false)
       return
     }
