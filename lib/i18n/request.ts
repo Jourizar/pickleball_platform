@@ -1,8 +1,12 @@
 // lib/i18n/request.ts
-// Stub — fully implemented in Task 4 (next-intl setup)
 import { getRequestConfig } from 'next-intl/server'
+import { defaultLocale, locales, type Locale } from './config'
 
-export default getRequestConfig(async () => ({
-  locale: 'es',
-  messages: {},
-}))
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale
+  const locale = locales.includes(requested as Locale) ? requested as Locale : defaultLocale
+  return {
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default,
+  }
+})
