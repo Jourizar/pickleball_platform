@@ -42,22 +42,31 @@ export async function POST(request: NextRequest) {
 
   if (user) {
     const today = new Date().toISOString().split('T')[0]
+
+    type SlotRow = {
+      start_time: string
+      end_time: string
+      max_capacity: number
+      courts: { name: string } | null
+      reservations: { id: string }[]
+    }
+
     const { data: slots } = await supabase
       .from('time_slots')
       .select(`
-        start_time, end_time, max_capacity, is_blocked,
+        start_time, end_time, max_capacity,
         courts(name),
         reservations(id)
       `)
       .eq('date', today)
       .eq('is_blocked', false)
-      .order('start_time')
+      .order('start_time') as { data: SlotRow[] | null, error: unknown }
 
     if (slots && slots.length > 0) {
       const lines = slots.map(slot => {
         const booked = Array.isArray(slot.reservations) ? slot.reservations.length : 0
         const available = slot.max_capacity - booked
-        const courtName = (slot.courts as { name: string } | null)?.name ?? 'Court'
+        const courtName = slot.courts?.name ?? 'Court'
         return `- ${courtName}: ${slot.start_time}–${slot.end_time} (${available} of ${slot.max_capacity} spots free)`
       })
       systemPrompt += `\n\nToday's court availability (${today}):\n${lines.join('\n')}`
