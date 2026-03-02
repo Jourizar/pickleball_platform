@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       reservations: { id: string }[]
     }
 
-    const { data: slots } = await supabase
+    const { data: rawSlots } = await supabase
       .from('time_slots')
       .select(`
         start_time, end_time, max_capacity,
@@ -60,7 +60,9 @@ export async function POST(request: NextRequest) {
       `)
       .eq('date', today)
       .eq('is_blocked', false)
-      .order('start_time') as { data: SlotRow[] | null, error: unknown }
+      .order('start_time')
+
+    const slots = rawSlots as SlotRow[] | null
 
     if (slots && slots.length > 0) {
       const lines = slots.map(slot => {
