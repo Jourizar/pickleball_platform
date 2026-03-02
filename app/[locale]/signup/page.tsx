@@ -20,6 +20,7 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -49,15 +50,44 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
       return
     }
 
+    setSuccess(true)
+    router.refresh()
+  }
+
+  function handleContinue() {
     const redirect = searchParams.get('redirect')
     const destination = redirect && redirect.startsWith('/') ? redirect : `/${locale}`
     router.push(destination)
-    router.refresh()
   }
 
   return (
     <div className="inner-page flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
+
+        {/* Success screen */}
+        {success && (
+          <div className="text-center">
+            <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-display text-3xl font-bold text-white mb-2">¡Bienvenido/a!</h2>
+            <p className="font-body text-white/50 mb-2">
+              Tu cuenta ha sido creada exitosamente.
+            </p>
+            <p className="font-body text-sm text-white/30 mb-8">{fullName || email}</p>
+            <button
+              onClick={handleContinue}
+              className="w-full py-4 rounded-full font-display font-bold text-lg text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors"
+            >
+              Ir al inicio →
+            </button>
+          </div>
+        )}
+
+        {/* Signup form */}
+        {!success && <>
 
         {/* Logo mark */}
         <div className="text-center mb-10">
@@ -145,6 +175,8 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
             {t('login_title')}
           </Link>
         </p>
+
+        </>}
 
       </div>
     </div>
