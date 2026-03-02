@@ -1,18 +1,25 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Menu, X, Globe } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
+
+interface AuthUser {
+  name: string
+}
 
 interface HeaderProps {
   locale: string
+  user: AuthUser | null
 }
 
-export default function Header({ locale }: HeaderProps) {
+export default function Header({ locale, user }: HeaderProps) {
   const t = useTranslations('nav')
   const pathname = usePathname()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -36,6 +43,13 @@ export default function Header({ locale }: HeaderProps) {
   ]
 
   const transparent = isHome && !scrolled && !open
+
+  async function handleLogout() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push(`/${locale}/login`)
+    router.refresh()
+  }
 
   return (
     <header
@@ -80,12 +94,25 @@ export default function Header({ locale }: HeaderProps) {
             <Globe size={14} />
             {otherLocale.toUpperCase()}
           </Link>
-          <Link
-            href={`/${locale}/login`}
-            className="px-5 py-2 rounded-full font-display font-bold text-sm text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors duration-150"
-          >
-            {t('login')}
-          </Link>
+
+          {user ? (
+            <div className="flex items-center gap-3">
+              <span className="font-body text-sm text-white/70">{user.name}</span>
+              <button
+                onClick={handleLogout}
+                className="px-5 py-2 rounded-full font-display font-bold text-sm text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors duration-150"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          ) : (
+            <Link
+              href={`/${locale}/login`}
+              className="px-5 py-2 rounded-full font-display font-bold text-sm text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors duration-150"
+            >
+              {t('login')}
+            </Link>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -119,13 +146,26 @@ export default function Header({ locale }: HeaderProps) {
           >
             <Globe size={14} /> {otherLocale.toUpperCase()}
           </Link>
-          <Link
-            href={`/${locale}/login`}
-            className="w-full text-center py-3 rounded-full font-display font-bold text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors"
-            onClick={() => setOpen(false)}
-          >
-            {t('login')}
-          </Link>
+
+          {user ? (
+            <>
+              <span className="font-body text-sm text-white/50">{user.name}</span>
+              <button
+                onClick={() => { setOpen(false); handleLogout() }}
+                className="w-full text-center py-3 rounded-full font-display font-bold text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors"
+              >
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <Link
+              href={`/${locale}/login`}
+              className="w-full text-center py-3 rounded-full font-display font-bold text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors"
+              onClick={() => setOpen(false)}
+            >
+              {t('login')}
+            </Link>
+          )}
         </div>
       )}
     </header>
