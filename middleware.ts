@@ -51,8 +51,7 @@ export async function middleware(request: NextRequest) {
 
   // 4. If intl wants to redirect (e.g. / → /es), honour that redirect but
   //    copy the Supabase session cookies onto it first.
-  if (intlResponse.status === 307 || intlResponse.status === 308 ||
-      intlResponse.status === 301 || intlResponse.status === 302) {
+  if (intlResponse.status >= 300 && intlResponse.status < 400) {
     supabaseResponse.cookies.getAll().forEach(cookie => {
       intlResponse.cookies.set(cookie.name, cookie.value, cookie)
     })
@@ -60,9 +59,11 @@ export async function middleware(request: NextRequest) {
   }
 
   // 5. Protected route checks.
-  const isProtectedRoute = /^\/(es|en)\/(reservations|admin)/.test(pathname)
-  const isAdminRoute = /^\/(es|en)\/admin/.test(pathname)
-  const locale = pathname.startsWith('/en') ? 'en' : 'es'
+  const localePattern = locales.join('|')
+  const isProtectedRoute = new RegExp(`^/(${localePattern})/(reservations|admin)`).test(pathname)
+  const isAdminRoute = new RegExp(`^/(${localePattern})/admin`).test(pathname)
+  const pathLocale = pathname.split('/')[1]
+  const locale = (locales as readonly string[]).includes(pathLocale) ? pathLocale : defaultLocale
 
   if (isProtectedRoute && !user) {
     const loginUrl = new URL(`/${locale}/login`, request.url)
