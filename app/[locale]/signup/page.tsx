@@ -57,7 +57,7 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
   function handleContinue() {
     const redirect = searchParams.get('redirect')
     const destination = redirect && redirect.startsWith('/') ? redirect : `/${locale}`
-    router.push(destination)
+    window.location.href = destination
   }
 
   return (

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Menu, X, Globe } from 'lucide-react'
 import { useState, useEffect } from 'react'
@@ -19,7 +19,6 @@ interface HeaderProps {
 export default function Header({ locale, user }: HeaderProps) {
   const t = useTranslations('nav')
   const pathname = usePathname()
-  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -51,8 +50,7 @@ export default function Header({ locale, user }: HeaderProps) {
     } catch {
       // signOut failed — proceed to redirect regardless so the user lands on login
     }
-    router.push(`/${locale}/login`)
-    router.refresh()
+    window.location.href = `/${locale}/login`
   }
 
   return (
