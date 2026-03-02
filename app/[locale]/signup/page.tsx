@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 interface SignupPageProps {
@@ -13,6 +13,7 @@ interface SignupPageProps {
 export default function SignupPage({ params: { locale } }: SignupPageProps) {
   const t = useTranslations('auth')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -48,7 +49,9 @@ export default function SignupPage({ params: { locale } }: SignupPageProps) {
       return
     }
 
-    router.push(`/${locale}`)
+    const redirect = searchParams.get('redirect')
+    const destination = redirect && redirect.startsWith('/') ? redirect : `/${locale}`
+    router.push(destination)
     router.refresh()
   }
 
