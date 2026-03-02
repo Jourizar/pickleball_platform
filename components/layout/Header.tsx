@@ -45,8 +45,12 @@ export default function Header({ locale, user }: HeaderProps) {
   const transparent = isHome && !scrolled && !open
 
   async function handleLogout() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+    } catch {
+      // signOut failed — proceed to redirect regardless so the user lands on login
+    }
     router.push(`/${locale}/login`)
     router.refresh()
   }
@@ -102,7 +106,7 @@ export default function Header({ locale, user }: HeaderProps) {
                 onClick={handleLogout}
                 className="px-5 py-2 rounded-full font-display font-bold text-sm text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors duration-150"
               >
-                Cerrar sesión
+                {t('logout')}
               </button>
             </div>
           ) : (
@@ -154,7 +158,7 @@ export default function Header({ locale, user }: HeaderProps) {
                 onClick={() => { setOpen(false); handleLogout() }}
                 className="w-full text-center py-3 rounded-full font-display font-bold text-[#050e07] bg-yellow-400 hover:bg-yellow-300 transition-colors"
               >
-                Cerrar sesión
+                {t('logout')}
               </button>
             </>
           ) : (

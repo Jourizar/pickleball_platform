@@ -27,6 +27,7 @@ export default async function LocaleLayout({
 
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  // error is intentionally ignored — getUser() returns null user on failure (never throws)
 
   const authUser = user
     ? {
