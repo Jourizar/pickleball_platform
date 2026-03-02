@@ -13,7 +13,7 @@ interface ChatBotProps {
   locale: string
 }
 
-export default function ChatBot({ locale: _locale }: ChatBotProps) {
+export default function ChatBot({ locale }: ChatBotProps) {
   const t = useTranslations('helpbot')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
@@ -52,7 +52,7 @@ export default function ChatBot({ locale: _locale }: ChatBotProps) {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, locale }),
         signal: controller.signal,
       })
 
