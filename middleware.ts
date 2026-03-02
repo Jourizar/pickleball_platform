@@ -82,7 +82,11 @@ export async function middleware(request: NextRequest) {
       .single()
 
     if (!profile || profile.role !== 'admin') {
-      return NextResponse.redirect(new URL(`/${locale}`, request.url))
+      const adminDeniedRedirect = NextResponse.redirect(new URL(`/${locale}`, request.url))
+      supabaseResponse.cookies.getAll().forEach(cookie => {
+        adminDeniedRedirect.cookies.set(cookie.name, cookie.value, cookie)
+      })
+      return adminDeniedRedirect
     }
   }
 
