@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { locales, type Locale } from '@/lib/i18n/config'
+import { createClient } from '@/lib/supabase/server'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -24,10 +25,21 @@ export default async function LocaleLayout({
 
   const messages = await getMessages()
 
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const authUser = user
+    ? {
+        name: (user.user_metadata?.full_name as string | undefined)
+          || user.email?.split('@')[0]
+          || 'Usuario',
+      }
+    : null
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="min-h-screen flex flex-col">
-        <Header locale={locale} />
+        <Header locale={locale} user={authUser} />
         <main className="flex-1 pt-16">
           {children}
         </main>
