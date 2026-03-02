@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
         setAll(cookiesToSet) {
           // Update request cookies so subsequent reads in this same middleware
           // call see the refreshed token.
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value, options)
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
           )
           // Rebuild supabaseResponse with the mutated request so Next.js
           // propagates the new cookies downstream.
