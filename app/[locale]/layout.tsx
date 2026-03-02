@@ -46,7 +46,7 @@ export default async function LocaleLayout({
           {children}
         </main>
         <Footer locale={locale} />
-        <ChatBot locale={locale} />
+        <ChatBot locale={locale} userName={authUser?.name} />
       </div>
     </NextIntlClientProvider>
   )

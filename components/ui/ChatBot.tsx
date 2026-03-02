@@ -11,9 +11,10 @@ interface Message {
 
 interface ChatBotProps {
   locale: string
+  userName?: string
 }
 
-export default function ChatBot({ locale }: ChatBotProps) {
+export default function ChatBot({ locale, userName }: ChatBotProps) {
   const t = useTranslations('helpbot')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
@@ -117,7 +118,7 @@ export default function ChatBot({ locale }: ChatBotProps) {
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
             {messages.length === 0 && (
               <p className="text-center font-body text-sm text-white/30 mt-10">
-                ¿En qué puedo ayudarte?
+                {userName ? `¡Hola, ${userName}! ¿En qué puedo ayudarte?` : '¿En qué puedo ayudarte?'}
               </p>
             )}
             {messages.map((msg, i) => (
